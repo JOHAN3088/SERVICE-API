@@ -41,19 +41,28 @@ router.get('/:id',async(req,res,next)=>{
 router.put('/:id',async(req,res,next)=>{
         const body = req.body;
         const id = req.params.id;
-        const respuesta= await ModelUser.findByIdAndUpdate({_id:id},body);
-        res.send(respuesta);
-        res.send("usuario guardado correctamente")
+        try {
+            const respuesta= await ModelUser.findByIdAndUpdate({_id:id},body);
+            res.send(respuesta);
+         
+        } catch (error) {
+            next(error)
+            
+        }
+       
    
     });
 //ELIMINAR
 router.delete('/:id',async(req,res,next)=>{
     const id = req.params.id;
-
+    try {
         const respuesta= await ModelUser.deleteOne({_id:id});
-        res.send(respuesta);
-        res.send("usuario eliminado correctamente")
-   
+        res.send(respuesta); 
+    } catch (error) {
+        next(error);
+        
+    }
+        
     
     });
 
